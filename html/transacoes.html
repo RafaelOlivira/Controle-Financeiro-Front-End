@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transações Realizadas</title>
+    <link rel="stylesheet" href="../css/transacoes.css">
+</head>
+<body>
+    <h1>Transações Realizadas</h1>
+    <div class="container">
+        <div class="filter">
+            <select id="type" class="type">
+                <option value="ALL">Todos</option>
+                <option value="INCOME">Receita</option>
+                <option value="EXPENSE">Despesa</option>
+            </select>
+            <input type="text" placeholder="Pesquise:" id="search" class="search">
+        </div>
+        <div class="box-transactions">
+            <ul id="transaction-list"></ul>
+        </div>
+        <h2>Total no mês: <span id="balance"></span></h2>
+    </div>
+    <script src="../js/transacoes.js"></script>
+</body>
+</html>

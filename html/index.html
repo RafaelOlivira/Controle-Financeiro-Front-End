@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+
+        <h1>Controle Financeiro</h1>
+        <h2>Adicionar Transação</h2>
+        <div class="forms">
+            <form  id="transactionForm">
+                <label for="description">Descrição:</label>
+                <input type="text" id="description" placeholder="Descrição">
+                <label for="amount">VALOR:</label>
+                <input type="number" id="amount" placeholder="Valor R$">
+                <label for="type">TIPO:</label>
+                <select id="type">
+                    <option value="INCOME">Receita</option>
+                    <option value="EXPENSE">Despesa</option>
+                </select>
+                <label for="date">DATA:</label>
+                <input type="date" id="date">
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+        <h2>Saldo: <span id="balance">R$ 0</span></h2>
+        <h2>Transações <span id="delete-all" style="color:#e74c3c;cursor: pointer;">X</span></h2>
+        <div class="transactions-box">
+            <ul id="transaction-list"></ul>
+        </div>
+        <a href="./transacoes.html" target="_blank"><button>Exibir Todas Transações</button></a>
+    </div>
+    <script src="../js/index.js"></script>
+</body>
+</html>
