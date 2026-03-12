@@ -5,58 +5,92 @@ let totalBalance = 0
 const ul = document.querySelector("#transaction-list")
 const balanceTotal = document.querySelector("#balance")
 const type = document.querySelector("#type")
-
+const date = document.querySelector("#date") // Exibir data
+const month = document.querySelector("#month-filter")
+const year = document.querySelector("#year-filter")
+const search = document.querySelector("#search")
 // Funções
 
-const loadTransactions = async ()=>{ // Carregar as transações já realizadas anteriormente. AO iniciar a página
-  try {
-    const res = await fetch(API_URL)
-    const data = await res.json()
-    console.log(data)
-    data.forEach(t => {
-      createTransactionElement(t, t.description, t.value, t.type);
-      updateBalance(t.type === "INCOME" ? t.value : -t.value)
-    });
-  } catch (error) {
-      console.log("Erro ao carregar transações: ", error);
-  }
+const loadYear = ()=>{ // Carregar anos 
+    const selectYear = document.querySelector("#year-filter")
+    let yearCurrenty = new Date().getFullYear()
+    for(let i = 0; i<10 ; i++){
+        let optionYear = document.createElement("option")
+        optionYear.appendChild(document.createTextNode(yearCurrenty))
+        optionYear.value = `${yearCurrenty}`
+        selectYear.appendChild(optionYear)
+        yearCurrenty -= 1
+    }
 }
 
-// Busca dados apenas do tipo Receita / INCOME
+const showDate = ()=>{ // Exibir a data na tela
+    const dateCurrenty = new Date()
+    const day = dateCurrenty.getDate()
+    const month = dateCurrenty.getMonth() + 1 
+    const year = dateCurrenty.getFullYear()
+    date.textContent = `${day}/${month}/${year}`
+}
 
-const fetchIncome = async (value)=>{
-    try {
-        const res = await fetch(`${API_URL}/type/${value}`)
+// const loadTransactions = async ()=>{ // Carregar as transações já realizadas anteriormente. AO iniciar a página
+//   try {
+//     const res = await fetch(API_URL)
+//     const data = await res.json()
+
+//     data.forEach(t => {
+//       createTransactionElement(t, t.description, t.value, t.type);
+//       updateBalance(t.type === "INCOME" ? t.value : -t.value)
+//     });
+//   } catch (error) {
+//       console.log("Erro ao carregar transações: ", error);
+//   }
+// }
+
+
+const findByMonthYear = async (month, year)=>{ 
+    totalBalance = 0
+    try{
+
+        const res = await fetch(`${API_URL}/date?month=${month}&year=${year}`)
         const data = await res.json()
- 
+
+        ul.innerHTML = ""
+         
+        balanceTotal.textContent = `R$ 0`
+
+        data.forEach(t=>{
+            createTransactionElement(t, t.description, t.value, t.type)
+            updateBalance(t.type === "INCOME" ? t.value : -t.value)
+        })
+        if(ul.innerHTML == ""){
+            ul.innerHTML = "Não há transações realizadas nesse periodo!"
+        }
+    }catch(error){
+        console.log("Erro: ", error)
+    }
+
+}
+
+// Busca dados apenas do tipo Receita / Despesa
+
+const findByType = async (value,month,year)=>{
+    totalBalance = 0
+    try {
+        const res = await fetch(`${API_URL}/search?type=${value}&month=${month}&year=${year}`)
+        const data = await res.json()
+        
         data.forEach(t => {
             createTransactionElement(t, t.description, t.value, t.type);
             updateBalance(t.type === "INCOME" ? t.value : -t.value)
         });
-        console.log(data)
+        if(ul.innerHTML == ""){
+            ul.innerHTML = "Não há transações realizadas nesse periodo!"
+        }
     } catch (error) {
         console.log("Erro ao carregar transações: ", error);
     }
 }
 
-
-// Busca dados apenas do tipo Despesa / EXPENSE
-
-const fetchExpense = async (value)=>{
-    try {
-        const res = await fetch(`${API_URL}/type/${value}`)
-        const data = await res.json()
  
-        data.forEach(t => {
-            createTransactionElement(t, t.description, t.value, t.type);
-            updateBalance(t.type === "INCOME" ? t.value : -t.value)
-        });
-        console.log(data)
-    } catch (error) {
-        console.log("Erro ao carregar transações: ", error);
-    }
-}
-
 // Atualizar valor total da conta
 const updateBalance = (value)=>{
     totalBalance += Number(value)
@@ -90,8 +124,10 @@ const createTransactionElement = (data, descValue, amountValue, typeValue) => {
   // Conteúdo da transação
   li.innerHTML = `
     <span>${descValue}</span>
+    <div class="valueDelete">
     <span>R$ ${amountValue}</span>
     <button class="delete">X</button>
+    </div>
   `;
   
   // Botão de exclusão
@@ -117,24 +153,42 @@ const createTransactionElement = (data, descValue, amountValue, typeValue) => {
 
 // Eventos
 
-const reload = (typeValue)=>{
-    document.addEventListener("DOMContentLoaded", ()=>{
-    console.log(typeValue)
-    if(typeValue == "INCOME"){
-        fetchIncome(typeValue)
-    }else if(typeValue == "EXPENSE"){
-        fetchExpense(typeValue)
+// Ao carregar a tela
+document.addEventListener("DOMContentLoaded", ()=>{
+    const monthCurrenty = new Date().getMonth() + 1
+    const yearCurrenty = new Date().getFullYear()
+    month.value = monthCurrenty
+    year.value = yearCurrenty
+    findByMonthYear(monthCurrenty,yearCurrenty)
+    showDate()
+    loadYear()
+
+})
+
+type.addEventListener("change", (event)=>{
+    const typeValue = event.target.value
+    ul.innerHTML = ""
+    totalBalance = 0
+    
+    if(typeValue === "ALL"){
+        findByMonthYear(month.value,year.value)
     }else{
-        loadTransactions()
+        findByType(typeValue,month.value,year.value)
     }
 })
-}
-reload()
-type.addEventListener("change", (event)=>{
-    typeValue = event.target.value
-    // if(typeValue == "ALL"){
-    //     window.location.reload()
-    //     return
-    // }
-    reload(typeValue)
+
+month.addEventListener("change", (event)=>{
+    const monthSelect = event.target.value
+    const year = document.querySelector("#year-filter").value
+    
+    findByMonthYear(monthSelect,year)
+})
+year.addEventListener("change", (event)=>{
+    const yearSelect = event.target.value
+    const month = document.querySelector("#month-filter").value
+    findByMonthYear(month,yearSelect)
+})
+search.addEventListener("input", (event)=>{
+    let digitado = event.target.value
+    console.log(digitado)
 })

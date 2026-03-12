@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="../css/transacoes.css">
 </head>
 <body>
+    <div class="date">
+        <span id="date"></span>
+    </div>
     <h1>Transações Realizadas</h1>
     <div class="container">
         <div class="filter">
@@ -15,12 +18,35 @@
                 <option value="INCOME">Receita</option>
                 <option value="EXPENSE">Despesa</option>
             </select>
+            
+            <div class="date-filter">
+                <select id="month-filter" class="month-filter">
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+                <select id="year-filter" class="year-filter">
+                     
+                </select>
+            </div>
+ 
+            
             <input type="text" placeholder="Pesquise:" id="search" class="search">
         </div>
         <div class="box-transactions">
             <ul id="transaction-list"></ul>
         </div>
         <h2>Total no mês: <span id="balance"></span></h2>
+        <a href="../html/index.html"><button class="btn-voltar">VOLTAR</button></a>
     </div>
     <script src="../js/transacoes.js"></script>
 </body>

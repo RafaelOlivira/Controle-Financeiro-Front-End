@@ -66,6 +66,11 @@ body{
     justify-content: space-between;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 }
+.valueDelete{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .income{
     border-left: 5px solid #2ecc71;
 }
@@ -92,10 +97,43 @@ body{
 
 /* Opções de filtro Receita / Despesa */
 
+
+.date{ /* Estilização da data*/
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 6px;
+    cursor: default;
+    background-color: white;
+}
+ 
+.month-filter{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.month-filter:focus{
+    outline: none;
+}
+
+.year-filter{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.year-filter:focus{
+    outline: none;
+}
+
 .filter{ /* Div dos filtros */
     display: flex;
-    justify-content: space-between;
-    width: 300px;
+    justify-content:space-evenly;
+    width: 500px;
+    gap: 10px;
+    max-width: 500px;
 }
 .type{ /* Select de type */
     padding: 6px;
@@ -112,4 +150,18 @@ input{
     border-radius: 5px;
     padding: 10px;
 }
- 
+input:focus{
+    outline: none;
+}
+.btn-voltar{
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    width: 200px;
+    background-color: #2ecc71;
+    color: white;
+}
+.btn-voltar:hover{
+    background-color: #27ae60;
+}
