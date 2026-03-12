@@ -48,6 +48,7 @@ const showDate = ()=>{ // Exibir a data na tela
 
 const findByMonthYear = async (month, year)=>{ 
     totalBalance = 0
+    search.value = ""
     try{
 
         const res = await fetch(`${API_URL}/date?month=${month}&year=${year}`)
@@ -72,10 +73,11 @@ const findByMonthYear = async (month, year)=>{
 
 // Busca dados apenas do tipo Receita / Despesa
 
-const findByType = async (value,month,year)=>{
+const findByType = async (typeValue,month,year)=>{
     totalBalance = 0
+    search.value = ""
     try {
-        const res = await fetch(`${API_URL}/search?type=${value}&month=${month}&year=${year}`)
+        const res = await fetch(`${API_URL}/search?type=${typeValue}&month=${month}&year=${year}`)
         const data = await res.json()
         
         data.forEach(t => {
@@ -90,6 +92,30 @@ const findByType = async (value,month,year)=>{
     }
 }
 
+// Busca dados quando o usuario digita o nome da descrição
+const searchDescription = async (typeValue,month,year,description)=>{ 
+    totalBalance = 0
+    ul.innerHTML = ""
+    try {
+        if(typeValue == "ALL"){
+            var res = await fetch(`${API_URL}/search/description/all?month=${month}&year=${year}&description=${description}`)
+        }else{
+            var res = await fetch(`${API_URL}/search/description?type=${typeValue}&month=${month}&year=${year}&description=${description}`)
+        }
+
+        const data = await res.json()
+    
+        data.forEach(t => {
+            createTransactionElement(t, t.description, t.value, t.type);
+            updateBalance(t.type === "INCOME" ? t.value : -t.value)
+        });
+        if(ul.innerHTML == ""){
+            ul.innerHTML = "Não há transações realizadas nesse periodo!"
+        }
+    } catch (error) {
+        console.log("Erro ao carregar transações: ", error);
+    }
+}
  
 // Atualizar valor total da conta
 const updateBalance = (value)=>{
@@ -189,6 +215,6 @@ year.addEventListener("change", (event)=>{
     findByMonthYear(month,yearSelect)
 })
 search.addEventListener("input", (event)=>{
-    let digitado = event.target.value
-    console.log(digitado)
+    let description = event.target.value
+    searchDescription(type.value,month.value,year.value,description)
 })
