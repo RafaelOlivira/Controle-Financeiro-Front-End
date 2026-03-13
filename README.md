@@ -40,3 +40,19 @@ Tela - 1
 Tela - 1.2
 ![Tela principal (Mensagem de Erro)](telas/Tela-1.2.png)
 
+Tela - 1.3
+![Tela principal (Mensagem de Sucesso)](telas/Tela-1.3.png)
+
+Tela - 2
+![Tela de consulta](telas/Tela-2.png)
+
+Tela - 2.1
+![Tela de consulta (Busca por descrição)](telas/Tela-2.1.png)
+
+Tela - 2.2
+![Tela de consulta (Receita)](telas/Tela-2.3.png)
+
+Tela - 2.3
+![Tela de consulta (Despesa)](telas/Tela-2.4.png)
+
+
