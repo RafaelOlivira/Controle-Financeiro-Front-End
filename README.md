@@ -37,3 +37,6 @@ Busca pela descrição:
 Tela - 1
 ![Tela principal](telas/Tela-1.png)
 
+Tela - 1.2
+![Tela principal (Mensagem de Erro)](telas/Tela-1.2.png)
+
