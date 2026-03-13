@@ -28,8 +28,14 @@ Período:
 Busca pela descrição:
 - Exemplo: Mercado
 - Exemplo: Salario
-
-
+---
+Tecnologias utilizadas:
+- Java
+- Spring Boot
+- PostgreSQL
+- HTML
+- CSS
+- JAVASCRIPT
 ---
 # Imagens do Projeto
 ---
