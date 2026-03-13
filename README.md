@@ -35,5 +35,5 @@ Busca pela descrição:
 ---
 
 Tela - 1
-![Tela principal](\telas\Tela-1)
+![Tela principal](telas\Tela-1)
 
