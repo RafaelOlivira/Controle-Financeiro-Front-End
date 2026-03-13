@@ -53,7 +53,7 @@ form.addEventListener("submit", async (event) => {
 
   // Validação
   if (description.value.trim() === "" || amount.value === "") {
-    alert("Preencha todos os campos!");
+    showNotification("Preencha todos os campos!","error")
     form.reset();
     dataNow();
     return;
